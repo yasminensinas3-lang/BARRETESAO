@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BARRETESÃO — OPEN HOUSE</title>
+  <meta name="description" content="Barretesão — Open House: 13/09 às 19h, noite do hambúrguer com chopp. Atração principal Matheus & Gustavo, participação Gabs, After FRONT.">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background-color: #0a0a0a; color: #fafafa; }
+    .glass { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(8px); }
+  </style>
+  <!-- QRCode.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body class="min-h-screen font-sans">
+  <!-- Top Banner — Deadline -->
+  <div class="w-full bg-red-600/20 border-b border-red-600/40 text-red-200 text-sm">
+    <div class="mx-auto max-w-6xl px-6 py-2 flex flex-wrap gap-2 items-center justify-between">
+      <span>Pagamento via PIX disponível <b>até 10/09 às 23:59</b>.</span>
+      <span id="deadlineCountdown" class="tabular-nums">Faltam: --d --h --m --s</span>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 opacity-35 bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1584622702592-0cd529bd41e1?q=80&w=1600&auto=format&fit=crop');"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-neutral-950"></div>
+    <div class="relative mx-auto max-w-6xl px-6 py-20">
+      <div class="flex items-center gap-4">
+        <img src="assets/logo.png" alt="Barretesão" class="w-24 h-24 object-contain hidden sm:block"/>
+        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight">BARRETESÃO — OPEN HOUSE</h1>
+      </div>
+      <p class="mt-4 text-lg md:text-xl text-neutral-200 max-w-3xl">
+        Noite do hambúrguer com chopp • Atração principal: <b>Matheus &amp; Gustavo</b> • Participação especial: <b>Gabs</b> • After: <b>FRONT</b>
+      </p>
+      <div class="mt-6 flex flex-wrap items-center gap-4 text-neutral-200 text-sm md:text-base">
+        <span>📅 13/09/2025</span>
+        <span>⏰ 19h</span>
+        <span>📍 Rua Boa Esperança, 267 - Chácara Santo Antônio • Prédio: Praça das Águas</span>
+        <span>🍔 Hambúrguer</span>
+        <span>🍺 Chopp</span>
+      </div>
+
+      <!-- Countdown -->
+      <div class="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-xl">
+        <div class="glass rounded-xl p-4 text-center">
+          <div id="dDays" class="text-3xl font-extrabold tabular-nums">--</div>
+          <div class="text-xs uppercase tracking-wider text-neutral-300">Dias</div>
+        </div>
+        <div class="glass rounded-xl p-4 text-center">
+          <div id="dHours" class="text-3xl font-extrabold tabular-nums">--</div>
+          <div class="text-xs uppercase tracking-wider text-neutral-300">Horas</div>
+        </div>
+        <div class="glass rounded-xl p-4 text-center">
+          <div id="dMinutes" class="text-3xl font-extrabold tabular-nums">--</div>
+          <div class="text-xs uppercase tracking-wider text-neutral-300">Min</div>
+        </div>
+        <div class="glass rounded-xl p-4 text-center">
+          <div id="dSeconds" class="text-3xl font-extrabold tabular-nums">--</div>
+          <div class="text-xs uppercase tracking-wider text-neutral-300">Seg</div>
+        </div>
+      </div>
+
+      <div class="mt-10 flex flex-wrap gap-3">
+        <a href="#ingressos" class="inline-flex items-center rounded-2xl bg-white text-black px-5 py-3 font-semibold">Garantir meu ingresso ➡️</a>
+        <a href="#pix" class="inline-flex items-center rounded-2xl border border-white/30 px-5 py-3 font-semibold text-white">Pagar via PIX</a>
+      </div>
+      <div id="salesClosedMsg" class="mt-3 text-sm text-red-300 hidden">Vendas via PIX encerradas. Entre em contato com a produção.</div>
+    </div>
+  </section>
+
+  <!-- Line-up -->
+  <section id="lineup" class="mx-auto max-w-6xl px-6 py-14">
+    <div class="flex items-center gap-2 mb-6 text-neutral-300">🎵 Line-up</div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="glass rounded-xl p-6"><div class="text-sm text-neutral-300 mb-1 uppercase tracking-wide">Principal</div><div class="text-2xl font-bold">Matheus &amp; Gustavo</div></div>
+      <div class="glass rounded-xl p-6"><div class="text-sm text-neutral-300 mb-1 uppercase tracking-wide">Feat</div><div class="text-2xl font-bold">Gabs</div></div>
+      <div class="glass rounded-xl p-6"><div class="text-sm text-neutral-300 mb-1 uppercase tracking-wide">After</div><div class="text-2xl font-bold">FRONT</div></div>
+    </div>
+  </section>
+
+  <!-- Ingressos -->
+  <section id="ingressos" class="mx-auto max-w-6xl px-6 py-14">
+    <div class="mb-6">
+      <div class="text-sm uppercase tracking-wide text-neutral-300">Ingressos</div>
+      <h2 class="text-3xl font-bold">Lote atual: <span id="lote">1</span></h2>
+      <p class="text-neutral-300 mt-2">A cada confirmação de PIX, o lote vira automaticamente. <b><span id="pixCount">0</span></b> confirmações nesta sessão.</p>
+      <p class="text-yellow-200 mt-1">Pagamento via PIX somente até <b>10/09</b>. Valor único: <b>R$ 80,00</b>.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="glass rounded-xl p-6 flex flex-col gap-3">
+        <div class="text-xl font-bold flex items-center gap-2">🎟️ Camarote Brahma</div>
+        <div class="text-neutral-300">Vista privilegiada + área reservada</div>
+        <div class="text-neutral-100 font-semibold">R$ 80,00</div>
+        <a href="#pix" class="mt-2 inline-block text-center rounded-2xl bg-white text-black px-4 py-2 font-semibold" id="payBtn1">Pagar via PIX</a>
+      </div>
+      <div class="glass rounded-xl p-6 flex flex-col gap-3">
+        <div class="text-xl font-bold flex items-center gap-2">🎟️ Pista Premium</div>
+        <div class="text-neutral-300">Frente ao palco</div>
+        <div class="text-neutral-100 font-semibold">R$ 80,00</div>
+        <a href="#pix" class="mt-2 inline-block text-center rounded-2xl bg-white text-black px-4 py-2 font-semibold" id="payBtn2">Pagar via PIX</a>
+      </div>
+      <div class="glass rounded-xl p-6 flex flex-col gap-3">
+        <div class="text-xl font-bold flex items-center gap-2">🎟️ Pista</div>
+        <div class="text-neutral-300">Acesso geral</div>
+        <div class="text-neutral-100 font-semibold">R$ 80,00</div>
+        <a href="#pix" class="mt-2 inline-block text-center rounded-2xl bg-white text-black px-4 py-2 font-semibold" id="payBtn3">Pagar via PIX</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PIX (simple key) -->
+  <section id="pix" class="mx-auto max-w-6xl px-6 py-14">
+    <div class="mb-6">
+      <div class="text-sm uppercase tracking-wide text-neutral-300">Pagamento</div>
+      <h2 class="text-3xl font-bold">PIX</h2>
+      <p class="text-neutral-300 mt-2">Chave PIX (e-mail): <span class="font-semibold" id="pixKey">gabriella.olopes@gmail.com</span></p>
+      <p class="text-neutral-300">Disponível até <b>10/09 às 23:59</b>.</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+      <div class="glass rounded-xl p-6">
+        <div class="flex flex-col items-center gap-3">
+          <div id="qrcode"></div>
+          <div class="text-sm text-neutral-300 text-center">Escaneie o QR para copiar a chave PIX<br/>ou copie manualmente abaixo.</div>
+          <div class="w-full flex gap-2">
+            <input id="pixInput" readonly class="flex-1 bg-black/40 border border-white/10 rounded px-3 py-2" value="gabriella.olopes@gmail.com" />
+            <button id="copyBtn" class="rounded border border-white/30 px-3 py-2">Copiar</button>
+          </div>
+          <button id="confirmPix" class="rounded-2xl mt-4 bg-white text-black px-4 py-2 font-semibold">Confirmei meu PIX (virar lote)</button>
+          <div class="text-xs text-neutral-400">* Demonstração local — a virada de lote real depende da produção.</div>
+        </div>
+      </div>
+      <div class="glass rounded-xl p-6 space-y-3">
+        <div class="text-sm text-neutral-300">Deixe um recado para a produção (opcional)</div>
+        <textarea placeholder="Ex.: Chego 20h, vou com 2 amigos…" class="w-full bg-black/40 border border-white/10 rounded px-3 py-2 h-28"></textarea>
+        <div class="text-sm text-neutral-300">Precisa enviar comprovante? Anexe no Drive abaixo.</div>
+        <a href="https://drive.google.com/drive/u/0/folders/15vY4QWWJDZSXVj_oKSF848nimZQe-EcF" target="_blank" rel="noreferrer" class="inline-block rounded-2xl border border-white/30 px-4 py-2">Abrir pasta do Drive</a>
+        <div class="text-xs text-neutral-400">A pasta abrirá em uma nova aba para upload das fotos/comprovantes.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Car & WhatsApp with list -->
+  <section id="transporte" class="mx-auto max-w-6xl px-6 py-14">
+    <div class="mb-6">
+      <div class="text-sm uppercase tracking-wide text-neutral-300 flex items-center gap-2">🚗 Chegada &amp; Estacionamento</div>
+      <h2 class="text-3xl font-bold">Vai de carro?</h2>
+      <p class="text-neutral-300 mt-2">Preencha os dados e clique em <b>Adicionar à lista</b>. Ao final, envie a relação por WhatsApp.</p>
+    </div>
+    <div class="glass rounded-xl p-6 grid md:grid-cols-2 gap-6">
+      <div class="space-y-4">
+        <div class="space-y-2">
+          <label for="guest" class="block text-sm">Seu nome</label>
+          <input id="guest" placeholder="Ex.: Maria Silva" class="w-full bg-black/40 border border-white/10 rounded px-3 py-2" />
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="space-y-2">
+            <label for="plate" class="block text-sm">Placa</label>
+            <input id="plate" placeholder="ABC1D23" class="w-full bg-black/40 border border-white/10 rounded px-3 py-2" />
+          </div>
+          <div class="space-y-2">
+            <label for="model" class="block text-sm">Modelo</label>
+            <input id="model" placeholder="Ex.: Onix 1.0 2020" class="w-full bg-black/40 border border-white/10 rounded px-3 py-2" />
+          </div>
+        </div>
+        <div class="flex gap-3">
+          <button id="addCar" class="rounded-2xl bg-white text-black px-4 py-2 font-semibold">Adicionar à lista</button>
+          <button id="clearCars" class="rounded-2xl border border-white/30 px-4 py-2">Limpar lista</button>
+        </div>
+        <div class="text-xs text-neutral-400">A lista fica salva no seu navegador.</div>
+      </div>
+      <div class="space-y-3">
+        <div class="text-sm text-neutral-300">Lista de carros</div>
+        <div class="rounded-2xl overflow-hidden border border-white/10">
+          <table class="w-full text-sm">
+            <thead class="bg-white/10">
+              <tr><th class="text-left p-2">Nome</th><th class="text-left p-2">Placa</th><th class="text-left p-2">Modelo</th><th class="p-2">Ação</th></tr>
+            </thead>
+            <tbody id="carTable"></tbody>
+          </table>
+        </div>
+        <a id="sendCars" href="#" target="_blank" rel="noreferrer" class="inline-block rounded-2xl bg-white text-black px-4 py-2 font-semibold">Finalizar e enviar por WhatsApp</a>
+        <div class="text-xs text-neutral-400">Envia para <b>+55 11 98952-3288</b> a relação atual.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dress Code (added, style unchanged) -->
+  <section id="dresscode" class="mx-auto max-w-6xl px-6 py-14">
+    <div class="mb-6 flex items-center gap-2 text-neutral-300">👢 Dress Code</div>
+    <div class="space-y-4 text-neutral-200 text-lg">
+      <p><b>Só vai quem é cuiudo!</b></p>
+      <p>Obrigatório ir <b>a caráter</b>:</p>
+      <ul class="list-disc list-inside space-y-2">
+        <li>Bota</li>
+        <li>Chapéu ou boné cuiudo</li>
+        <li>Fivela (opcional, mas bem-vinda 🤠)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Informações do Show -->
+  <section id="info" class="mx-auto max-w-6xl px-6 py-14">
+    <div class="mb-6 flex items-center gap-2 text-neutral-300">ℹ️ Informações do Evento</div>
+    <div class="grid md:grid-cols-2 gap-6 text-neutral-300">
+      <div class="space-y-3">
+        <p><b>Classificação:</b> 18+ (menores somente acompanhados e com autorização).</p>
+        <p><b>Itens proibidos:</b> objetos cortantes, substâncias ilícitas, latas/garrafas de vidro.</p>
+        <p><b>Estacionamento:</b> vagas limitadas no prédio <b>Praça das Águas</b>. Priorize caronas/ride-app.</p>
+      </div>
+      <div class="space-y-3">
+        <p><b>Entrada digital:</b> confirme o pagamento via PIX e mostre o comprovante na portaria.</p>
+        <p><b>Bar:</b> noite do hambúrguer com chopp — sujeito à disponibilidade.</p>
+        <p><b>Programação:</b> <i>Matheus &amp; Gustavo</i>, participação <i>Gabs</i> e <i>After FRONT</i> — uma só noite.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10 bg-black/30">
+    <div class="mx-auto max-w-6xl px-6 py-10 text-sm text-neutral-400 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div>
+        <div class="font-semibold text-neutral-200">BARRETESÃO — OPEN HOUSE</div>
+        <div>13/09/2025 • 19h • Rua Boa Esperança, 267 - Chácara Santo Antônio • Prédio: Praça das Águas</div>
+      </div>
+      <div class="text-xs">Site de pré-lançamento. Sujeito a ajustes da produção.</div>
+    </div>
+  </footer>
+
+  <script>
+    // Helpers
+    function pad2(n){return String(n).padStart(2,'0');}
+    function countdown(targetISO, cb) {
+      function tick() {
+        const now = new Date();
+        const target = new Date(targetISO);
+        let diff = Math.floor((target.getTime() - now.getTime())/1000);
+        const safe = Math.max(0, diff);
+        const days = Math.floor(safe / 86400);
+        const hours = Math.floor((safe % 86400)/3600);
+        const minutes = Math.floor((safe % 3600)/60);
+        const seconds = safe % 60;
+        cb({ total: diff, days, hours, minutes, seconds });
+      }
+      tick();
+      return setInterval(tick, 1000);
+    }
+    const eventISO = '2025-09-13T19:00:00-03:00';
+    const deadlineISO = '2025-09-10T23:59:00-03:00';
+
+    // Event countdown
+    countdown(eventISO, ({days,hours,minutes,seconds}) => {
+      document.getElementById('dDays').textContent = pad2(days);
+      document.getElementById('dHours').textContent = pad2(hours);
+      document.getElementById('dMinutes').textContent = pad2(minutes);
+      document.getElementById('dSeconds').textContent = pad2(seconds);
+    });
+
+    // Deadline countdown + lock buttons
+    countdown(deadlineISO, ({total,days,hours,minutes,seconds}) => {
+      const dead = document.getElementById('deadlineCountdown');
+      dead.textContent = `Faltam: ${pad2(days)}d ${pad2(hours)}h ${pad2(minutes)}m ${pad2(seconds)}s`;
+      const closed = total <= 0;
+      document.getElementById('salesClosedMsg').classList.toggle('hidden', !closed);
+      ['payBtn1','payBtn2','payBtn3','confirmPix'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('pointer-events-none', closed);
+        if (el) el.classList.toggle('opacity-50', closed);
+      });
+    });
+
+    // QR com chave simples
+    const pixKey = 'gabriella.olopes@gmail.com';
+    new QRCode(document.getElementById('qrcode'), {
+      text: 'PIX CHAVE: ' + pixKey,
+      width: 220,
+      height: 220,
+      correctLevel: QRCode.CorrectLevel.M
+    });
+    document.getElementById('copyBtn').addEventListener('click', () => {
+      navigator.clipboard.writeText(pixKey);
+      alert('Chave PIX copiada!');
+    });
+
+    // Lote logic (local demo)
+    let lote = 1;
+    let pixCount = 0;
+    document.getElementById('confirmPix').addEventListener('click', () => {
+      pixCount += 1;
+      lote += 1;
+      document.getElementById('pixCount').textContent = pixCount;
+      document.getElementById('lote').textContent = lote;
+      alert('PIX confirmado (demo). Lote virou!');
+    });
+
+    // Car list (localStorage) + WhatsApp envio
+    const LS_KEY = 'barretesao_carlist_v1';
+    function loadCars(){
+      try { return JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e){ return []; }
+    }
+    function saveCars(list){ localStorage.setItem(LS_KEY, JSON.stringify(list)); }
+    function renderCars(){
+      const tbody = document.getElementById('carTable');
+      tbody.innerHTML = '';
+      const list = loadCars();
+      list.forEach((c, idx) => {
+        const tr = document.createElement('tr');
+        tr.className = idx % 2 ? 'bg-white/5' : '';
+        tr.innerHTML = `<td class="p-2">${c.name}</td><td class="p-2">${c.plate}</td><td class="p-2">${c.model||''}</td><td class="p-2"><button data-i="${idx}" class="text-xs underline">remover</button></td>`;
+        tr.querySelector('button').addEventListener('click', (e)=>{
+          const i = parseInt(e.target.getAttribute('data-i'));
+          const arr = loadCars(); arr.splice(i,1); saveCars(arr); renderCars();
+        });
+        tbody.appendChild(tr);
+      });
+    }
+    renderCars();
+    document.getElementById('addCar').addEventListener('click', ()=>{
+      const name = (document.getElementById('guest').value || '').trim();
+      const plate = (document.getElementById('plate').value || '').trim().toUpperCase();
+      const model = (document.getElementById('model').value || '').trim();
+      if(!name || !plate){ alert('Informe nome e placa.'); return; }
+      const list = loadCars(); list.push({name, plate, model, t: Date.now()}); saveCars(list); renderCars();
+      document.getElementById('guest').value=''; document.getElementById('plate').value=''; document.getElementById('model').value='';
+    });
+    document.getElementById('clearCars').addEventListener('click', ()=>{ if(confirm('Limpar lista de carros?')) { saveCars([]); renderCars(); }});
+    document.getElementById('sendCars').addEventListener('click', (e)=>{
+      const list = loadCars();
+      if(list.length === 0){ alert('Lista vazia.'); return; }
+      const lines = list.map((c,i)=> `${i+1}. ${c.name} — ${c.plate} — ${c.model||'-'}`).join('%0A');
+      const msg = `Lista de carros — Barretesão%0A%0A${lines}`;
+      const phone = '5511989523288'; // +55 11 98952-3288
+      e.target.href = `https://wa.me/${phone}?text=${msg}`;
+    });
+  </script>
+</body>
+</html>
